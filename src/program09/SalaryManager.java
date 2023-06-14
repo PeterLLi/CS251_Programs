@@ -10,6 +10,32 @@ public class SalaryManager {
     }
 
     public SalaryManager(int id, double salary, int yearsOfService) {
+        this.setId(id);
+        this.setSalary(salary);
+        this.setYearsOfService(yearsOfService);
+    }
 
+    public int getId() {
+        return this.id;
+    }
+
+    public double getSalary() {
+        return this.salary;
+    }
+
+    public int getYearsOfService() {
+        return this.yearsOfService;
+    }
+
+    private void setId(int id) {
+        this.id = id;
+    }
+
+    private void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    private void setYearsOfService(int yearsOfService) {
+        this.yearsOfService = yearsOfService;
     }
 }
