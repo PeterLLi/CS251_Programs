@@ -1,6 +1,8 @@
 package program09;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class SalaryManager {
     private int id;
@@ -39,5 +41,17 @@ public class SalaryManager {
 
     private void setYearsOfService(int yearsOfService) {
         this.yearsOfService = yearsOfService;
+    }
+
+
+    public void create(String filename) {
+        Path path = Paths.get(filename);
+
+        try {
+            Files.createFile(path);
+        } catch (Exception e) {
+            System.out.println("Failed to create file. Printing stacktrace:");
+            e.printStackTrace();
+        }
     }
 }
