@@ -50,7 +50,7 @@ public class Employee implements Raiseable{
     public void create(String fileName) {
         Path path = Paths.get(fileName);
 
-        try{
+        try {
             Files.createFile(path);
         } catch(Exception e) {
             System.out.println("Encountered an exception. Printing stacktrace: ");

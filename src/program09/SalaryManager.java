@@ -1,5 +1,7 @@
 package program09;
 
+import java.nio.file.Path;
+
 public class SalaryManager {
     private int id;
     private double salary;
