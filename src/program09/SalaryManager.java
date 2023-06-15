@@ -66,6 +66,7 @@ public class SalaryManager implements Raiseable{
 
     public boolean addTo(String inFileName, String outFileName, int id, double salary, int yearsOfService) {
         boolean written = false;
+        boolean match = false;
 
         String line = "";
         int lineId = 0;
@@ -98,7 +99,11 @@ public class SalaryManager implements Raiseable{
                     writer.newLine();
                     writer.write(line); // Write the current line we're on
                     writer.newLine();
+
                     written = true;
+                } else if(lineId == this.getId()) {
+                    match = true;
+                    writer.write(line); // Give preference for the current read line
                 }
             }
 
