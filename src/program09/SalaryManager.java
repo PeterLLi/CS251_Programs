@@ -118,7 +118,7 @@ public class SalaryManager implements Raiseable{
             e.printStackTrace();
         }
 
-        return false;
+        return match;
     }
 
     public boolean removeFrom(String inFileName, String outFileName, int id) {
