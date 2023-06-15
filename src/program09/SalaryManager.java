@@ -1,5 +1,9 @@
 package program09;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -60,6 +64,34 @@ public class SalaryManager implements Raiseable{
     }
 
     public boolean addTo(String inFileName, String outFileName, int id, double salary, int yearsOfService) {
+        boolean written = false;
+        String line = "";
+        int lineId = 0;
+        int index = 0;
+
+        this.setId(id);
+        this.setSalary(salary);
+        this.setYearsOfService(yearsOfService);
+
+        try(BufferedReader reader = new BufferedReader(new FileReader(inFileName));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(outFileName))) {
+            while((line = reader.readLine()) != null) {
+                index = line.indexOf(":");
+                lineId = Integer.parseInt(line.substring(0, index));
+
+                if(lineId < this.getId() || written) {
+                    writer.write(line);
+                    continue;
+                } else if(lineId > this.getId() && !written) {
+                    writer.write(id+":" + salary + ":" + yearsOfService);
+                    written = true;
+                    writer.write(line); // Write the current line we're on
+                }
+            }
+        } catch(Exception e) {
+            System.out.println("Encountered exception. Printing stacktrace.");
+            e.printStackTrace();
+        }
 
         return false;
     }
