@@ -80,6 +80,7 @@ public class SalaryManager implements Raiseable{
             if(firstNewFile) {
                 writer.write(id + ":" + salary + ":" + yearsOfService);
                 writer.newLine();
+
                 firstNewFile = false;
                 written = true;
             }
