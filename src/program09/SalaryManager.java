@@ -102,8 +102,10 @@ public class SalaryManager implements Raiseable{
 
                     written = true;
                 } else if(lineId == this.getId()) {
-                    match = true;
                     writer.write(line); // Give preference for the current read line
+
+                    match = true;
+                    written = true;
                 }
             }
 
