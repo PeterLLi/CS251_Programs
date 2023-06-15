@@ -12,6 +12,7 @@ public class SalaryManager implements Raiseable{
     private int id;
     private double salary;
     private int yearsOfService;
+    boolean firstNewFile = true;
 
     public SalaryManager() {
         this(1, 100000,1);
@@ -65,6 +66,7 @@ public class SalaryManager implements Raiseable{
 
     public boolean addTo(String inFileName, String outFileName, int id, double salary, int yearsOfService) {
         boolean written = false;
+
         String line = "";
         int lineId = 0;
         int index = 0;
@@ -75,18 +77,33 @@ public class SalaryManager implements Raiseable{
 
         try(BufferedReader reader = new BufferedReader(new FileReader(inFileName));
             BufferedWriter writer = new BufferedWriter(new FileWriter(outFileName))) {
+            if(firstNewFile) {
+                writer.write(id + ":" + salary + ":" + yearsOfService);
+                writer.newLine();
+                firstNewFile = false;
+                written = true;
+            }
+
             while((line = reader.readLine()) != null) {
                 index = line.indexOf(":");
                 lineId = Integer.parseInt(line.substring(0, index));
 
                 if(lineId < this.getId() || written) {
                     writer.write(line);
+                    writer.newLine();
                     continue;
                 } else if(lineId > this.getId() && !written) {
-                    writer.write(id+":" + salary + ":" + yearsOfService);
-                    written = true;
+                    writer.write(id + ":" + salary + ":" + yearsOfService);
+                    writer.newLine();
                     writer.write(line); // Write the current line we're on
+                    writer.newLine();
+                    written = true;
                 }
+            }
+
+            if(!written && !firstNewFile) {
+                writer.write(id + ":" + salary + ":" + yearsOfService);
+                writer.newLine();
             }
         } catch(Exception e) {
             System.out.println("Encountered exception. Printing stacktrace.");

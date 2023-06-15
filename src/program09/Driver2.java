@@ -10,5 +10,7 @@ public class Driver2 {
         sm.addTo("Test2", "Test3", 3, 150000.00, 7);
         sm.addTo("Test3", "Test4", 7, 250000.00, 5);
         sm.addTo("Test4", "Test5", 11, 300000.00, 11);
+
+        sm.addTo("Test5", "Test6", 5, 125000, 3);
     }
 }
