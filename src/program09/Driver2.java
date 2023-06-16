@@ -13,6 +13,8 @@ public class Driver2 {
 //
 //        sm.addTo("Test5", "Test6", 5, 125000, 3);
 
-        sm. mergeFiles("Test8", "Test6", "Test9");
+//        sm. mergeFiles("Test8", "Test6", "Test9");
+
+//        sm.display("Test9");
     }
 }

@@ -38,7 +38,27 @@ public class SalaryManager implements Raiseable{
     }
 
     public void display(String fileName) {
+        String line = "";
+        String format = "%-5s%-10s%-50s";
+        String[] data = new String[3];
 
+        int id = 0;
+        double salary = 0.0;
+        int yearsOfService = 0;
+
+        System.out.printf(format, "ID", "Salary", "Years of Service");
+        System.out.println();
+
+        try(BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            while((line = reader.readLine()) != null) {
+                data = line.split(":");
+                System.out.printf(format, data[0], data[1], data[2]);
+                System.out.println();
+            }
+        } catch (Exception e) {
+            System.out.println("Encountered an exception opening file. Prining stacktrace:");
+            e.printStackTrace();
+        }
     }
 
     public boolean addTo(String inFileName, String outFileName, int id, double salary, int yearsOfService) {
@@ -202,7 +222,7 @@ public class SalaryManager implements Raiseable{
             }
 
         } catch(Exception e) {
-            System.out.println("");
+            System.out.println("Encountered exception. Printing stacktrace:");
             e.printStackTrace();
         }
     }
