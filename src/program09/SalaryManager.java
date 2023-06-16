@@ -164,7 +164,19 @@ public class SalaryManager implements Raiseable{
                     file1Data = file1Line.split(":");
                     file2Data = file2Line.split(":");
 
-                    if(Integer.parseInt(file1Data[0]) < Integer.parseInt(file2Data[0])) {
+                    if(Integer.parseInt(file1Data[0]) == Integer.parseInt(file2Data[0])) {
+                        if(Double.parseDouble(file1Data[1]) >= Double.parseDouble(file2Data[1])) {
+                            fileWriter.write(file1Line);
+                            fileWriter.newLine();
+
+                            file2Line = file2Reader.readLine();
+                        } else {
+                            fileWriter.write(file2Line);
+                            fileWriter.newLine();
+
+                            file2Line = file2Reader.readLine();
+                        }
+                    } else if(Integer.parseInt(file1Data[0]) < Integer.parseInt(file2Data[0])) {
                         fileWriter.write(file1Line);
                         fileWriter.newLine();
                         continue; // May or may not need this here
@@ -183,6 +195,12 @@ public class SalaryManager implements Raiseable{
                                 fileWriter.write(file1Line);
                                 fileWriter.newLine();
                                 break;
+                            } else if(Integer.parseInt(file2Data[0]) == Integer.parseInt(file1Data[0])) {
+                                if(Double.parseDouble(file2Data[1]) > Double.parseDouble(file1Data[1])) {
+                                    fileWriter.write(file2Line);
+                                } else {
+                                    fileWriter.write(file1Line);
+                                }
                             }
                         }
 
