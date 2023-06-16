@@ -13,6 +13,8 @@ public class SalaryManager implements Raiseable{
     private double salary;
     private int yearsOfService;
     boolean firstNewFile = true;
+    boolean file1FirstRead = true;
+    boolean file2FirstRead = true;
 
     public SalaryManager() {
         this(1, 100000,1);
@@ -136,6 +138,99 @@ public class SalaryManager implements Raiseable{
     }
 
     public void mergeFiles(String inFileName1, String inFileName2, String outFileName) {
+        boolean file1Empty = false;
+        boolean file2Empty = false;
+        boolean file1Done = false;
+        boolean file2Done = false;
 
+        String file1Line = "";
+        String file2Line = "";
+
+        String[] file1Data = new String[3];
+        String[] file2Data = new String[3];
+
+        try(BufferedReader file1Reader = new BufferedReader(new FileReader(inFileName1));
+            BufferedReader file2Reader = new BufferedReader(new FileReader(inFileName2));
+            BufferedWriter fileWriter = new BufferedWriter(new FileWriter(outFileName))) {
+            // Read the first lines of each file
+            file1Line = file1Reader.readLine();
+            file2Line = file2Reader.readLine();
+
+            if(file1Line != null && file2Line != null) {
+                do {
+                    if(file1Line == null) {
+                        file1Done = true;
+                        break;
+                    }
+
+                    if(file2Line == null) {
+                        file2Done = true;
+                        break;
+                    }
+
+                    file1Data = file1Line.split(":");
+                    file2Data = file2Line.split(":");
+
+                    if(Integer.parseInt(file1Data[0]) < Integer.parseInt(file2Data[0])) {
+                        fileWriter.write(file1Line);
+                        fileWriter.newLine();
+                        continue; // May or may not need this here
+                    } else if(Integer.parseInt(file1Data[0]) > Integer.parseInt(file2Data[0])) {
+                        fileWriter.write(file2Line);
+                        fileWriter.newLine();
+
+                        while((file2Line = file2Reader.readLine()) != null) {
+                            file2Data = file2Line.split(":");
+
+                            if(Integer.parseInt(file2Data[0]) < Integer.parseInt(file1Data[0])) {
+                                fileWriter.write(file2Line);
+                                fileWriter.newLine();
+                                continue; // May or may not need this here
+                            } else if(Integer.parseInt(file2Data[0]) > Integer.parseInt(file1Data[0])) {
+                                fileWriter.write(file1Line);
+                                fileWriter.newLine();
+                                break;
+                            }
+                        }
+
+                        if(file2Line == null) {
+                            file2Done = true;
+                            fileWriter.write(file1Line);
+                            fileWriter.newLine();
+                        }
+                    }
+                } while((file1Line = file1Reader.readLine()) != null);
+            }
+
+            if(file1Line == null) {
+                fileWriter.write(file2Line);
+                fileWriter.newLine();
+                file1Done = true;
+            }
+
+            if(file2Line == null) {
+                fileWriter.write(file1Line);
+                fileWriter.newLine();
+                file2Done = true;
+            }
+
+            if(file1Done) {
+                while((file2Line = file2Reader.readLine()) != null) {
+                    fileWriter.write(file2Line);
+                    fileWriter.newLine();
+                }
+            }
+
+            if(file2Done) {
+                while((file1Line = file1Reader.readLine()) != null) {
+                    fileWriter.write(file1Line);
+                    fileWriter.newLine();
+                }
+            }
+
+        } catch(Exception e) {
+            System.out.println("");
+            e.printStackTrace();
+        }
     }
 }
