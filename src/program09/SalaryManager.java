@@ -113,8 +113,6 @@ public class SalaryManager implements Raiseable{
     }
 
     public void mergeFiles(String inFileName1, String inFileName2, String outFileName) {
-        boolean file1Empty = false;
-        boolean file2Empty = false;
         boolean file1Done = false;
         boolean file2Done = false;
 
