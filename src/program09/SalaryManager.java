@@ -26,31 +26,6 @@ public class SalaryManager implements Raiseable{
         this.setYearsOfService(yearsOfService);
     }
 
-    public int getId() {
-        return this.id;
-    }
-
-    public double getSalary() {
-        return this.salary;
-    }
-
-    public int getYearsOfService() {
-        return this.yearsOfService;
-    }
-
-    private void setId(int id) {
-        this.id = id;
-    }
-
-    private void setSalary(double salary) {
-        this.salary = salary;
-    }
-
-    private void setYearsOfService(int yearsOfService) {
-        this.yearsOfService = yearsOfService;
-    }
-
-
     public void create(String filename) {
         Path path = Paths.get(filename);
 
@@ -232,5 +207,30 @@ public class SalaryManager implements Raiseable{
             System.out.println("");
             e.printStackTrace();
         }
+    }
+
+
+    public int getId() {
+        return this.id;
+    }
+
+    public double getSalary() {
+        return this.salary;
+    }
+
+    public int getYearsOfService() {
+        return this.yearsOfService;
+    }
+
+    private void setId(int id) {
+        this.id = id;
+    }
+
+    private void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    private void setYearsOfService(int yearsOfService) {
+        this.yearsOfService = yearsOfService;
     }
 }
