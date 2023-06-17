@@ -119,8 +119,29 @@ public class SalaryManager implements Raiseable{
     }
 
     public boolean removeFrom(String inFileName, String outFileName, int id) {
+        boolean match = false;
 
-        return false;
+        try(BufferedReader reader = new BufferedReader(new FileReader(inFileName));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(outFileName))) {
+            String line = "";
+            String[] data = new String[3];
+
+            while((line = reader.readLine()) != null) {
+                data = line.split(":");
+
+                if(Integer.parseInt(data[0]) != id) {
+                    writer.write(line);
+                    writer.newLine();
+                } else {
+                    match = true;
+                }
+            }
+        } catch(Exception e) {
+            System.out.println("Encountered an exception while removing from file. Printing stacktrace:");
+            e.printStackTrace();
+        }
+
+        return match;
     }
 
     public void addService(String inFileName, String outFileName) {
