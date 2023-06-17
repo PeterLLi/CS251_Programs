@@ -145,10 +145,50 @@ public class SalaryManager implements Raiseable{
     }
 
     public void addService(String inFileName, String outFileName) {
+        try(BufferedReader reader = new BufferedReader(new FileReader(inFileName));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(outFileName))) {
+            String line = "";
+            String[] data = new String[3];
 
+            while((line = reader.readLine()) != null) {
+                data = line.split(":");
+
+                data[2] = String.valueOf(Integer.parseInt(data[2]) + 1);
+
+                writer.write(data[0] + ":" + data[1] + ":" + data[2]);
+                writer.newLine();
+            }
+
+        } catch(Exception e) {
+            System.out.println("Error adding service years. Printing stacktrace:");
+            e.printStackTrace();
+        }
     }
 
     public int raise(String inFileName, String outFileName, int yearsOfService, double salaryIncPercent) {
+        String line = "";
+        String[] data = new String[3];
+        int entriesApplied = 0;
+        double updatedSalary = 0.0;
+
+        try(BufferedReader reader = new BufferedReader(new FileReader(inFileName));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(outFileName))) {
+            while((line = reader.readLine()) != null) {
+                data = line.split(":");
+                this.setYearsOfService(yearsOfService);
+
+                if(Integer.parseInt(data[2]) >= this.getYearsOfService()) {
+                    updatedSalary = Double.parseDouble(data[1]) * (salaryIncPercent/100) + Double.parseDouble(data[1]);
+                    data[1] = String.valueOf(updatedSalary);
+                    writer.write(data[0] + ":" + data[1] + ":" + data[2]);
+                } else {
+                    writer.write(line);
+                }
+            }
+        } catch(Exception e) {
+            System.out.println("Error increasing salary. Printing stacktrace:");
+            e.printStackTrace();
+        }
 
         return 0;
     }
@@ -156,10 +196,8 @@ public class SalaryManager implements Raiseable{
     public void mergeFiles(String inFileName1, String inFileName2, String outFileName) {
         boolean file1Done = false;
         boolean file2Done = false;
-
         String file1Line = "";
         String file2Line = "";
-
         String[] file1Data = new String[3];
         String[] file2Data = new String[3];
 
